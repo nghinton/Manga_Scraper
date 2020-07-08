@@ -23,21 +23,8 @@ def get_all_chapters(url):
     #  create a bs object with the given url
     soup = bs(requests.get(url).content, "html.parser")
 
-    # Grab the cover image
-    cover_container = soup.find(id="mangaimg")
-    if cover_container:
-        cover_img = cover_container.find("img")
-        cover_url = cover_img.attrs.get("src")
-        cover_url = urljoin(url, cover_url)
-        # go ahead and download the cover image
-        r = urlparse(url)
-        path = r.netloc + "/" + url.split("/")[-1]
-        download(cover_url, path, "cover")
-
     # get the chapter listings table
     chapter_table = soup.find(id="listing")
-
-
 
     for a_tag in tqdm(chapter_table.find_all("a"), "Extracting Chapters"):
 
@@ -74,7 +61,7 @@ def get_all_images(url):
     menu = soup.find(id="pageMenu")
     
     # calculate the number of images
-    num_images = 5 # len(menu.contents) // 2
+    num_images = len(menu.contents) // 2
 
     # build the image page urls to extract from and add to image_page_urls[]
     img_page_urls = []
@@ -91,7 +78,7 @@ def get_all_images(url):
             img_page_urls.append(page_url)
 
     # for every image page url get the image off of the page
-    for img_page in tqdm(img_page_urls, f"Extracting {url} : "):
+    for img_page in tqdm(img_page_urls, f"Extracting {url} Images: "):
 
         # make the soup object for the page
         img_page_soup = bs(requests.get(img_page).content, "html.parser")
@@ -137,14 +124,13 @@ def download(url, pathname, num):
     # get the file name
     filename = os.path.join(pathname, num + ".jpg")
 
-    # progress bar, changing the unit to bytes instead of iteration (default by tqdm)
-    progress = tqdm(response.iter_content(1024), f"Downloading {filename}", total=file_size, unit="B", unit_scale=True, unit_divisor=1024)
+    # download the file
+    print(f"Downloading {filename} ...", end="")
     with open(filename, "wb") as f:
-        for data in progress:
+        for data in response.iter_content(1024):
             # write data read to the file
             f.write(data)
-            # update the progress bar manually
-            progress.update(len(data))
+    print(" Finished")
 
 
 def main(url, path):

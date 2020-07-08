@@ -2,7 +2,6 @@ import os
 import requests
 from concurrent.futures import ThreadPoolExecutor
 from threading import Thread
-from time import perf_counter
 from queue import Queue
 from bs4 import BeautifulSoup as bs
 from urllib.parse import urljoin, urlparse
