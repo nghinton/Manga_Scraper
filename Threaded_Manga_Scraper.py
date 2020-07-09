@@ -146,11 +146,13 @@ def download():
         filename = local_path + "/" + url.split("/")[-1]
     
         # download the file incrementally
+        print(f"Downloading {filename} ...")
         with open(filename, "wb") as f:
             for data in response.iter_content(1024):
                 # write data read to the file
                 f.write(data)
-        
+        print(f"    Finished with {filename}")
+
         # we're done downloading the file
         q.task_done()
 
