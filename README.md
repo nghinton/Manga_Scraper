@@ -14,6 +14,7 @@ To run this:
     python3 Manga_Scraper.py http://www.mangapanda.com/high-school-of-the-dead
     ```
     A new folder `www.mangapanda.com` will be created automatically that contains a sub folder `high-school-of-the-dead`. This folder will contain subfolders labeled according
-    to chapter numbers for each individual chapter of the manga, and each subfolder will contain the images of the manga chapter.
+    to chapter numbers for each individual chapter of the manga, and each subfolder will contain the images of the manga chapter. Downloading additional manga will create separate
+    folders underneath the `www.mangapanda.com` folder with the same folder and file structure as the previous example.
     
 - The above command probably needs to be run in the same folder that the scraper file is located in. I havent looked into how to publish or install this tool yet.
