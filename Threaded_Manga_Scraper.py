@@ -115,7 +115,6 @@ def get_chapter_images(url):
         # finally, if the url is valid add it to the global queue
         if is_valid(img_url):
             q.put(img_url)
-            print(img_url)
 
 def download():
     """
@@ -160,9 +159,6 @@ def main(url):
 
     # grab all of the chapter urls
     chapters = get_all_chapters(url)
-
-    for chapter in chapters:
-        print(chapter)
 
     # start the threads to get all of the image urls in the queue
     with ThreadPoolExecutor(max_workers=n_threads) as pool:
